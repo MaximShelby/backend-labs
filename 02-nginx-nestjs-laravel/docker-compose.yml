@@ -33,3 +33,12 @@ services:
       - "8002:80"
     environment:
       WEB_DOCUMENT_ROOT: /app/public
+
+  python:
+    build: ./python-app
+    ports:
+      - "8003:8000"
+    depends_on:
+      - nginx
+      - nodejs
+      - php

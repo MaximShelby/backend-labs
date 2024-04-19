@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import {DocumentBuilder, SwaggerModule} from "@nestjs/swagger";
+import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
+import { Logger } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -9,11 +10,13 @@ async function bootstrap() {
       .setTitle('NestJs API Documentation')
       .setDescription('Backend API for the NestJs application.')
       .setVersion('1.0')
+      .addTag('Tags')
+      .addServer('/node')
       .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('api/docs', app, document);
 
   await app.listen(3000);
 }
-bootstrap();
+bootstrap().catch(err => Logger.error(err));
